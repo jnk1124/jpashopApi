@@ -83,4 +83,12 @@ public class OrderRepository {
         return new ArrayList<>();
     }
 
+    public List<Order> orderList() {
+        List resultList = em.createQuery("select o from Order o" +
+                " join fetch o.member m" +
+                " join fetch o.delivery d", Order.class)
+                .getResultList();
+
+        return resultList;
+    }
 }

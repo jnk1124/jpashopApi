@@ -5,6 +5,8 @@ import jpabook.jpashop.domains.Order;
 import jpabook.jpashop.domains.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
+import jpabook.jpashop.repository.displayQuery.OrderDtoRepository;
+import jpabook.jpashop.repository.displayQuery.OrderSimpleDto;
 import jpabook.jpashop.service.OrderService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +23,7 @@ import java.util.List;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+    private final OrderDtoRepository orderDtoRepository;
 
     @GetMapping("/api/v2/orderList")
     public Result getOrderList(){
@@ -36,6 +39,27 @@ public class OrderApiController {
         return new Result(collect, collect.size());
     }
 
+    @GetMapping("/api/v3/orderList")
+    public Result getOrderList3(){
+
+        List<Order> orders = orderRepository.orderList();
+
+        List<orderDto> collect = new ArrayList<>();
+        for (Order order : orders) {
+            orderDto orderDto = new orderDto(order);
+            collect.add(orderDto);
+        }
+
+        return new Result(collect, collect.size());
+    }
+
+    @GetMapping("/api/v4/orderList")
+    public Result getOrderList4(){
+
+        List<OrderSimpleDto> orderSimpleDtos = orderDtoRepository.orderList4();
+
+        return new Result(orderSimpleDtos, orderSimpleDtos.size());
+    }
     @Data
     @AllArgsConstructor
     private class Result<T>{
