@@ -2,7 +2,6 @@ package jpabook.jpashop.repository.displayQuery;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -19,8 +18,6 @@ public class OrderDtoRepository {
                         " join o.member m" +
                         " join o.delivery d", OrderSimpleDto.class
                 ).getResultList();
-
-
     }
 
 }
